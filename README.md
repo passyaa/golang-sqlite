@@ -36,8 +36,7 @@ Once the containers are up and running, you can verify the API by accessing the 
 2. Get all groups: http://localhost:8080/groups
 
 ### 4. List API Endpoints
-You can Download Colletion Postman 
-
+You can Download Colletion Postman [Postman Collection](https://github.com/passyaa/GolangAppCURD/blob/main/golangApp_postman_collection.json)
 Here are some of the available API endpoints:
 
 1. GET /users/:id - Fetch a single user by ID
