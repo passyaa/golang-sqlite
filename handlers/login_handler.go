@@ -4,6 +4,8 @@ import (
 	"golangApp/config"
 	"golangApp/models"
 	"net/http"
+	"strconv"
+	"time"
 
 	"github.com/labstack/echo/v4"
 	"golang.org/x/crypto/bcrypt"
@@ -34,6 +36,32 @@ func HandleLogin(c echo.Context) error {
 		})
 	}
 
-	// Jika username dan password valid, redirect ke halaman home
-	return c.Redirect(http.StatusFound, "/")
+	// Simpan waktu login terakhir
+	user.LastLogin = time.Now()
+	config.DB.Save(&user)
+
+	// Redirect ke halaman profil pengguna
+	return c.Redirect(http.StatusFound, "/profile/"+strconv.Itoa(user.ID))
+}
+
+// UserProfile renders the profile page for the logged-in user
+func UserProfile(c echo.Context) error {
+	userID, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, echo.Map{
+			"message": "Invalid user ID",
+		})
+	}
+
+	var user models.User
+
+	// Mencari user berdasarkan ID
+	if err := config.DB.Preload("Groups").First(&user, userID).Error; err != nil {
+		return c.JSON(http.StatusNotFound, echo.Map{
+			"message": "User not found",
+		})
+	}
+
+	// Render the HTML page
+	return c.Render(http.StatusOK, "profile.html", user)
 }

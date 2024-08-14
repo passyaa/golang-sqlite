@@ -30,32 +30,40 @@ func main() {
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
 
-	// Apply the Basic Auth Middleware
-	e.Use(middlewares.BasicAuthMiddleware())
-
 	// Set up template renderer
 	renderer := &TemplateRenderer{
 		templates: template.Must(template.ParseGlob("templates/*.html")),
 	}
 	e.Renderer = renderer
 
-	// Routes
-	e.GET("/users/:id", handlers.GetUser)
-	e.GET("/users", handlers.GetAllUsers)
-	e.GET("/groups/:id", handlers.GetGroup)
-	e.GET("/groups", handlers.GetAllGroups)
-	e.POST("/users", handlers.CreateUser)
-	e.POST("/groups", handlers.CreateGroup)
-	e.PUT("/users/:id", handlers.UpdateUser)
-	e.PUT("/users/:id/enable", handlers.EnableUser)
-	e.PUT("/users/:id/disable", handlers.DisableUser)
-	e.DELETE("/users/:id", handlers.DeleteUser)
-	e.POST("/users/:id/groups/:group_id", handlers.AssignGroup)
-	e.DELETE("/groups/:group_id", handlers.RemoveGroup)
-	e.PUT("/users/:id/reset_password", handlers.ResetPassword)
-	e.GET("/login", handlers.ShowLoginPage)       // Menampilkan halaman login
-	e.POST("/login", handlers.HandleLogin)        // Memproses login
-	e.GET("/", handlers.HomePage)                 // Halaman home setelah login berhasil
+	// Routes that don't require authentication
+	e.GET("/", handlers.HomePage) // Halaman home dapat diakses tanpa autentikasi
+	e.GET("/login", handlers.ShowLoginPage)
+	e.POST("/login", handlers.HandleLogin)
+
+	// Route to show the user's profile
+	e.GET("/profile/:id", handlers.UserProfile)
+
+	// Group of routes that require authentication
+	auth := e.Group("/")
+
+	// Apply the Basic Auth Middleware only to specific routes
+	auth.Use(middleware.BasicAuth(middlewares.BasicAuthMiddleware))
+
+	auth.GET("/users/:id", handlers.GetUser)
+	auth.GET("/users", handlers.GetAllUsers)
+	auth.GET("/groups/:id", handlers.GetGroup)
+	auth.GET("/groups", handlers.GetAllGroups)
+	auth.POST("/users", handlers.CreateUser)
+	auth.POST("/groups", handlers.CreateGroup)
+	auth.PUT("/users/:id", handlers.UpdateUser)
+	auth.PUT("/users/:id/enable", handlers.EnableUser)
+	auth.PUT("/users/:id/disable", handlers.DisableUser)
+	auth.DELETE("/users/:id", handlers.DeleteUser)
+	auth.POST("/users/:id/groups/:group_id", handlers.AssignGroup)
+	auth.DELETE("/users/:id/groups/:group_id", handlers.RemoveAssignGroup)
+	auth.DELETE("/groups/:group_id", handlers.RemoveGroup)
+	auth.PUT("/users/:id/reset_password", handlers.ResetPassword)
 
 	// Start server
 	e.Logger.Fatal(e.Start(":8080"))

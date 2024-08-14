@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1 class="mt-5">User Profile</h1>
+        <div class="card mt-3">
+            <div class="card-body">
+                <h5 class="card-title">{{.Username}}</h5>
+                <p class="card-text"><strong>Email:</strong> {{.Email}}</p>
+                <p class="card-text"><strong>First Name:</strong> {{.FirstName}}</p>
+                <p class="card-text"><strong>Last Name:</strong> {{.LastName}}</p>
+                <p class="card-text"><strong>Last Login:</strong> {{.LastLogin}}</p>
+                <h6 class="mt-4">Groups</h6>
+                <ul>
+                    {{range .Groups}}
+                    <li>{{.Name}}</li>
+                    {{end}}
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

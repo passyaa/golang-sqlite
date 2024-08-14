@@ -12,5 +12,6 @@ type User struct {
 	IsEnabled bool      `json:"is_enabled" gorm:"default:true"`
 	CreatedAt time.Time `json:"created_at" gorm:"autoCreateTime"`
 	UpdatedAt time.Time `json:"updated_at" gorm:"autoUpdateTime"`
-	Groups    []Group   `json:"groups" gorm:"many2many:user_groups;"`
+	LastLogin time.Time `json:"last_login"`
+	Groups    []Group   `json:"groups" gorm:"many2many:user_groups"`
 }

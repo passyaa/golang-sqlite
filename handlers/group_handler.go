@@ -109,6 +109,48 @@ func AssignGroup(c echo.Context) error {
 	return c.NoContent(http.StatusOK)
 }
 
+// RemoveAssignGroup removes a group assignment from a user
+func RemoveAssignGroup(c echo.Context) error {
+	userID, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, echo.Map{
+			"message": "Invalid user ID",
+		})
+	}
+
+	groupID, err := strconv.Atoi(c.Param("group_id"))
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, echo.Map{
+			"message": "Invalid group ID",
+		})
+	}
+
+	var user models.User
+	var group models.Group
+
+	// Cek apakah user dan group ada di database
+	if err := config.DB.First(&user, userID).Error; err != nil {
+		return c.JSON(http.StatusNotFound, echo.Map{
+			"message": "User not found",
+		})
+	}
+
+	if err := config.DB.First(&group, groupID).Error; err != nil {
+		return c.JSON(http.StatusNotFound, echo.Map{
+			"message": "Group not found",
+		})
+	}
+
+	// Menghapus relasi group dari user
+	if err := config.DB.Model(&user).Association("Groups").Delete(&group); err != nil {
+		return c.JSON(http.StatusInternalServerError, echo.Map{
+			"message": "Failed to remove group assignment",
+		})
+	}
+
+	return c.NoContent(http.StatusOK)
+}
+
 // RemoveGroup removes a group
 func RemoveGroup(c echo.Context) error {
 	id := c.Param("group_id")

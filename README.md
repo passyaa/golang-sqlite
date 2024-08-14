@@ -21,7 +21,7 @@ cd golang-sqlite
 ```
 
 ### 2. Build and Run the Containers
-This command will build the Go application into a Docker image and start the application container.
+This command will build a Go application into a Docker image in 1 or 2 minutes depending on the network and start the application container.
 ```bash
 docker-compose up --build
 ```
@@ -48,7 +48,12 @@ Here are some of the available API endpoints:
 10. GET /groups - Fetch all groups
 11. POST /groups - Create a new groups
 12. POST /users/:id/groups/:group_id - Assign a group to a user
-13  . DELETE /groups/:group_id - Remove a group
+13. DELETE /users/:id/groups/:group_id - Remove Assign a group to a user
+13. DELETE /groups/:group_id - Remove a group
+
+With User Interface HTML and CSS Bootstrap
+14. / - Home Login
+15. /login - Login
 
 ### 5. Stopping the Containers
 To stop the running containers, press Ctrl+C in the terminal where Docker Compose is running. You can also use the following command to stop and remove the containers:

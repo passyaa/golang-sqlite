@@ -2,16 +2,13 @@ package middlewares
 
 import (
 	"github.com/labstack/echo/v4"
-	"github.com/labstack/echo/v4/middleware"
 )
 
-// BasicAuthMiddleware provides a middleware for Basic Authentication
-func BasicAuthMiddleware() echo.MiddlewareFunc {
-	return middleware.BasicAuth(func(username, password string, c echo.Context) (bool, error) {
-		// Replace with your user validation logic
-		if username == "spadmin" && password == "admin" {
-			return true, nil
-		}
-		return false, nil
-	})
+// BasicAuthMiddleware is a middleware to authenticate using Basic Auth
+func BasicAuthMiddleware(username, password string, c echo.Context) (bool, error) {
+	// Replace with your user validation logic
+	if username == "spdmin" && password == "password" {
+		return true, nil
+	}
+	return false, nil
 }
