@@ -21,13 +21,11 @@ cd golangapp
 ```
 
 ### 2. Build and Run the Containers
+This command :
 ```bash
 docker-compose up --build
 ```
-
-This command will:
-
-Build the Go application into a Docker image.
+will build the Go application into a Docker image.
 Start a MySQL database container and initialize it with the necessary tables and sample data.
 Start the Go application container.
 
