@@ -14,5 +14,4 @@ func BasicAuthMiddleware(username, password string, c echo.Context) (bool, error
 	} else {
 		return false, echo.NewHTTPError(http.StatusUnauthorized, "Invalid credentials")
 	}
-	return false, nil
 }
