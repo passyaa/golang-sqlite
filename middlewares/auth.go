@@ -3,6 +3,7 @@ package middlewares
 import (
 	"net/http"
 
+	"github.com/labstack/echo-contrib/session"
 	"github.com/labstack/echo/v4"
 )
 
@@ -15,11 +16,10 @@ func BasicAuthMiddleware(username, password string, c echo.Context) (bool, error
 		return false, echo.NewHTTPError(http.StatusUnauthorized, "Invalid credentials")
 	}
 }
-
 func AuthMiddleware(next echo.HandlerFunc) echo.HandlerFunc {
 	return func(c echo.Context) error {
-		session := c.Get("username")
-		if session == nil {
+		sess, _ := session.Get("session", c)
+		if sess.Values["username"] == nil {
 			return c.Redirect(http.StatusFound, "/login")
 		}
 		return next(c)

@@ -42,8 +42,10 @@ func HandleLogin(c echo.Context) error {
 	config.DB.Save(&user)
 
 	// Simpan status login di session
-	c.Set("username", user.Username)
-	c.Set("userID", user.ID)
+	sess, _ := session.Get("session", c)
+	sess.Values["username"] = user.Username
+	sess.Values["userID"] = user.ID
+	sess.Save(c.Request(), c.Response())
 
 	// Redirect ke halaman profil pengguna
 	return c.Redirect(http.StatusFound, "/profile/"+strconv.Itoa(user.ID))
