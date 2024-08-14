@@ -1,39 +1,28 @@
 package config
 
 import (
-	"fmt"
+	"golangApp/models"
 	"log"
-	"os"
 
-	"github.com/joho/godotenv"
-	"gorm.io/driver/mysql"
+	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 )
 
 var DB *gorm.DB
 
 func InitDB() {
-	// Load .env file
-	err := godotenv.Load()
+	// Tentukan path untuk database SQLite
+	dbPath := "golangApp.db"
+
+	// Buka koneksi ke database SQLite
+	var err error
+	DB, err = gorm.Open(sqlite.Open(dbPath), &gorm.Config{})
 	if err != nil {
-		log.Fatal("Error loading .env file")
+		log.Fatal("Failed to connect to SQLite database:", err)
 	}
 
-	// Get environment variables
-	user := os.Getenv("DB_USER")
-	password := os.Getenv("DB_PASSWORD")
-	host := os.Getenv("DB_HOST")
-	port := os.Getenv("DB_PORT")
-	dbname := os.Getenv("DB_NAME")
-	charset := os.Getenv("DB_CHARSET")
+	// Auto migrate tables
+	DB.AutoMigrate(&models.User{}, &models.Group{}, &models.UserGroup{})
 
-	// Create the DSN (Data Source Name)
-	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=%s&parseTime=True&loc=Local",
-		user, password, host, port, dbname, charset)
-
-	// Open connection to the database
-	DB, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
-	if err != nil {
-		log.Fatal("Failed to connect to database:", err)
-	}
+	log.Println("Connected to SQLite database successfully")
 }

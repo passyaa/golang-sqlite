@@ -9,7 +9,7 @@ import (
 func BasicAuthMiddleware() echo.MiddlewareFunc {
 	return middleware.BasicAuth(func(username, password string, c echo.Context) (bool, error) {
 		// Replace with your user validation logic
-		if username == "admin" && password == "admin" {
+		if username == "spadmin" && password == "admin" {
 			return true, nil
 		}
 		return false, nil

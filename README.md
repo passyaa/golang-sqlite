@@ -1,6 +1,6 @@
-# GolangApp API
+# GolangApp API With SQLite
 
-This is a simple API built with Go using the Echo framework and GORM for database management. The API provides user and group management features, including user authentication. This guide will walk you through the steps to set up and run the API using Docker.
+This is a API built with Go using the Echo framework, GORM for database management and SQLite. The API provides user and group management features, including user authentication. This guide will walk you through the steps to set up and run the API using Docker.
 
 ## Prerequisites
 
@@ -21,22 +21,19 @@ cd GolangAppCURD
 ```
 
 ### 2. Build and Run the Containers
-This command :
+This command will build the Go application into a Docker image and start the application container.
 ```bash
 docker-compose up --build
 ```
-will build the Go application into a Docker image.
-Start a MySQL database container and initialize it with the necessary tables and sample data.
-Start the Go application container.
 
 ### 3. Verify the Setup
-Once the containers are up and running, you can verify the API by accessing the following endpoint in your browser or using a tool like Postman:
+Once the containers are up and running, you can verify the API by accessing the following endpoint in Postman and use Authorization with Basic Auth Username : spadmin & Password : admin
 
 1. Get all users: http://localhost:8080/users
 2. Get all groups: http://localhost:8080/groups
 
 ### 4. List API Endpoints
-You can Download Colletion Postman [Postman Collection](https://github.com/passyaa/GolangAppCURD/blob/main/golangApp_postman_collection.json)
+You can Download Colletion Postman [Postman Collection](https://github.com/passyaa/GolangAppCURD/blob/main/golangApp_postman_collection.json),
 Here are some of the available API endpoints:
 
 1. GET /users/:id - Fetch a single user by ID
@@ -76,8 +73,8 @@ docker-compose up -d
 ```
 
 ### 7. Customizing the Database Initialization
-If you want to customize the initial database schema or seed data, edit the db/init.sql file. This file is executed when the MySQL container is first created.
+If you want to customize the initial database schema or seed data, you can modify the code in config.go where the SQLite database is initialized and migrated automatically.
 
 ### 8. Troubleshooting
-- If you encounter any issues with the containers not starting, ensure Docker and Docker Compose are installed correctly and check for any error messages in the terminal.
-- Make sure ports 8080 (for the API) and 3306 (for MySQL) are not in use by other applications.
+- If you encounter any issues with the container not starting, ensure Docker and Docker Compose are installed correctly and check for any error messages in the terminal.
+- Make sure port 8080 (for the API) is not in use by other applications.
