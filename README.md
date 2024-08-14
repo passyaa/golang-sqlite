@@ -34,37 +34,43 @@ Once the containers are up and running, you can verify the API by accessing the 
 
 ### 4. List API Endpoints
 You can Download Colletion Postman [Postman Collection](https://github.com/passyaa/GolangAppCURD/blob/main/golangApp_postman_collection.json),
+
 Here are some of the available API endpoints:
 
-1. GET /api/v1/users/:id                        - Fetch a single user by ID
-2. GET /api/v1/users                            - Fetch all users
-3. POST /api/v1/users                           - Create a new user
-4. PUT /api/v1/users/:id                        - Update a user by ID
-5. DELETE /api/v1/users/:id                     - Delete a user by ID
-6. PUT /api/v1/users/:id/enable                 - Enable a user
-7. PUT /api/v1/users/:id/disable                - Disable a user
-8. PUT /api/v1/users/:id/reset_password         - Reset user password
-9. GET /api/v1/groups/:id                       - Fetch a single group by ID
-10. GET /api/v1/groups                          - Fetch all groups
-11. POST /api/v1/groups                         - Create a new groups
-12. POST /api/v1/users/:id/groups/:group_id     - Assign a group to a user
-13. DELETE /api/v1/users/:id/groups/:group_id   - Remove Assign a group to a user
-14. DELETE /api/v1/groups/:group_id             - Remove a group
+| Method | Endpoint                                  | Description                                                                           |
+|--------|-------------------------------------------|---------------------------------------------------------------------------------------|
+| GET    | /api/v1/users/:id                         | Fetch a single user by ID                                                             |
+| GET    | /api/v1/users                             | Fetch all users                                                                       |
+| POST   | /api/v1/users                             | Create a new user                                                                     |
+| PUT    | /api/v1/users/:id                         | Update a user by ID                                                                   |
+| DELETE | /api/v1/users/:id                         | Delete a user by ID                                                                   |
+| PUT    | /api/v1/users/:id/enable                  | Enable a user                                                                         |
+| PUT    | /api/v1/users/:id/disable                 | Disable a user                                                                        |
+| PUT    | /api/v1/users/:id/reset_password          | Reset user password                                                                   |
+| GET    | /api/v1/groups/:id                        | Fetch a single group by ID                                                            |
+| GET    | /api/v1/groups                            | Fetch all groups                                                                      |
+| POST   | /api/v1/groups                            | Create a new group                                                                    |
+| POST   | /api/v1/users/:id/groups/:group_id        | Assign a group to a user                                                              |
+| DELETE | /api/v1/users/:id/groups/:group_id        | Remove assigned group from a user                                                     |
+| DELETE | /api/v1/groups/:group_id                  | Remove a group                                                                        |
 
-With User Interface HTML and CSS Bootstrap
-15. /               - Home Login
-16. /login          - Login
-17. /profile/:id    - If Success Login With Password, Redirect to Profile ID (This Is for Testing Login With Username & Password)
-18. /logout         - Logout
+### 5. List URL With User Interface (HTML and CSS Bootstrap)
+| Method | Endpoint                                  | Description                                                                           |
+|--------|-------------------------------------------|---------------------------------------------------------------------------------------|
+| GET    | /                                         | Home - Display homepage with login option                                             |
+| GET    | /login                                    | Login page                                                                            |
+| POST   | /login                                    | Handle login form submission                                                          |
+| GET    | /profile/:id                              | Profile page - Redirected after successful login, displays user profile by ID         |
+| GET    | /logout                                   | Logout - Log the user out and redirect to home page                                   |
 
-### 5. Stopping the Containers
+### 6. Stopping the Containers
 To stop the running containers, press Ctrl+C in the terminal where Docker Compose is running. You can also use the following command to stop and remove the containers:
 
 ```bash
 docker-compose down
 ```
 
-### 6. Additional Commands
+### 7. Additional Commands
 To rebuild the images without using the cache:
 ```bash
 docker-compose build --no-cache
@@ -80,9 +86,18 @@ To start the containers in the background (detached mode):
 docker-compose up -d
 ```
 
-### 7. Customizing the Database Initialization
+### 8. Customizing the Database Initialization
 If you want to customize the initial database schema or seed data, you can modify the code in config.go where the SQLite database is initialized and migrated automatically.
 
-### 8. Troubleshooting
+### 9. Troubleshooting
 - If you encounter any issues with the container not starting, ensure Docker and Docker Compose are installed correctly and check for any error messages in the terminal.
 - Make sure port 8080 (for the API) is not in use by other applications.
+
+
+## Author
+
+This project was created by [Kamal](https://www.linkedin.com/in/maulana-kamal-pasya/).
+
+I developed this project as part of my personal learning journey in Golang. If you find it useful, feel free to use it or contribute to it. You can reach me at [maulana.kp@netpoleons.com] or connect with me on [LinkedIn](https://www.linkedin.com/in/maulana-kamal-pasya/).
+
+Thank you for checking out my work! cheers 🍻 🍻
