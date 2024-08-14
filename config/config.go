@@ -22,7 +22,7 @@ func InitDB() {
 	}
 
 	// Auto migrate tables
-	DB.AutoMigrate(&models.User{}, &models.Group{}, &models.UserGroup{})
+	DB.AutoMigrate(&models.User{}, &models.Group{})
 
 	log.Println("Connected to SQLite database successfully")
 }

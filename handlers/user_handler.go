@@ -15,8 +15,8 @@ func GetUser(c echo.Context) error {
 	id := c.Param("id")
 	var user models.User
 
-	// Mencari user berdasarkan ID dengan GORM
-	if err := config.DB.First(&user, id).Error; err != nil {
+	// Mengambil user beserta grup yang diassign menggunakan Preload
+	if err := config.DB.Preload("Groups").First(&user, id).Error; err != nil {
 		return c.JSON(http.StatusNotFound, echo.Map{
 			"message": "User not found",
 		})
@@ -29,8 +29,8 @@ func GetUser(c echo.Context) error {
 func GetAllUsers(c echo.Context) error {
 	var users []models.User
 
-	// Mengambil semua pengguna dengan GORM
-	if err := config.DB.Find(&users).Error; err != nil {
+	// Mengambil semua user beserta grup yang diassign menggunakan Preload
+	if err := config.DB.Preload("Groups").Find(&users).Error; err != nil {
 		return c.JSON(http.StatusInternalServerError, echo.Map{
 			"message": "Failed to retrieve users",
 		})

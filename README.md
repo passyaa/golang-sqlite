@@ -46,8 +46,9 @@ Here are some of the available API endpoints:
 8. PUT /users/:id/reset_password - Reset user password
 9. GET /groups/:id - Fetch a single group by ID
 10. GET /groups - Fetch all groups
-11. POST /users/:id/groups/:group_id - Assign a group to a user
-12. DELETE /groups/:group_id - Remove a group
+11. POST /groups - Create a new groups
+12. POST /users/:id/groups/:group_id - Assign a group to a user
+13  . DELETE /groups/:group_id - Remove a group
 
 ### 5. Stopping the Containers
 To stop the running containers, press Ctrl+C in the terminal where Docker Compose is running. You can also use the following command to stop and remove the containers:

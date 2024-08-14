@@ -39,6 +39,33 @@ func GetAllGroups(c echo.Context) error {
 	return c.JSON(http.StatusOK, groups)
 }
 
+func CreateGroup(c echo.Context) error {
+	var group models.Group
+
+	// Bind input JSON to the group struct
+	if err := c.Bind(&group); err != nil {
+		return c.JSON(http.StatusBadRequest, echo.Map{
+			"message": "Invalid input",
+		})
+	}
+
+	// Validate the required fields
+	if group.Name == "" {
+		return c.JSON(http.StatusBadRequest, echo.Map{
+			"message": "Group name is required",
+		})
+	}
+
+	// Create the new group in the database
+	if err := config.DB.Create(&group).Error; err != nil {
+		return c.JSON(http.StatusInternalServerError, echo.Map{
+			"message": "Failed to create group",
+		})
+	}
+
+	return c.JSON(http.StatusCreated, group)
+}
+
 // AssignGroup assigns a group to a user
 func AssignGroup(c echo.Context) error {
 	userID, err := strconv.Atoi(c.Param("id"))
@@ -55,12 +82,25 @@ func AssignGroup(c echo.Context) error {
 		})
 	}
 
-	var userGroup models.UserGroup
-	userGroup.UserID = userID
-	userGroup.GroupID = groupID
+	var user models.User
+	var group models.Group
 
-	// Menetapkan grup ke pengguna
-	if err := config.DB.Create(&userGroup).Error; err != nil {
+	// Mencari user berdasarkan ID
+	if err := config.DB.First(&user, userID).Error; err != nil {
+		return c.JSON(http.StatusNotFound, echo.Map{
+			"message": "User not found",
+		})
+	}
+
+	// Mencari group berdasarkan ID
+	if err := config.DB.First(&group, groupID).Error; err != nil {
+		return c.JSON(http.StatusNotFound, echo.Map{
+			"message": "Group not found",
+		})
+	}
+
+	// Menetapkan group ke user
+	if err := config.DB.Model(&user).Association("Groups").Append(&group); err != nil {
 		return c.JSON(http.StatusInternalServerError, echo.Map{
 			"message": "Failed to assign group",
 		})
