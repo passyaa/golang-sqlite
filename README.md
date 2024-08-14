@@ -1,6 +1,6 @@
 # GolangApp API
 
-git a
+This is a simple API built with Go using the Echo framework and GORM for database management. The API provides user and group management features, including user authentication. This guide will walk you through the steps to set up and run the API using Docker.
 
 ## Prerequisites
 
