@@ -7,6 +7,8 @@ import (
 	"io"
 	"text/template"
 
+	"github.com/gorilla/sessions"
+	"github.com/labstack/echo-contrib/session"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 )
@@ -29,6 +31,9 @@ func main() {
 	// Middleware
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
+
+	// Setup session middleware (this should be before the routes that use session)
+	e.Use(session.Middleware(sessions.NewCookieStore([]byte("secret-key"))))
 
 	// Set up template renderer
 	renderer := &TemplateRenderer{

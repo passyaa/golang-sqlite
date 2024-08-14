@@ -3,6 +3,7 @@ package handlers
 import (
 	"golangApp/config"
 	"golangApp/models"
+	"log"
 	"net/http"
 	"strconv"
 	"time"
@@ -17,12 +18,10 @@ func ShowLoginPage(c echo.Context) error {
 	return c.Render(http.StatusOK, "login.html", nil)
 }
 
-// HandleLogin handles the login form submission
 func HandleLogin(c echo.Context) error {
 	username := c.FormValue("username")
 	password := c.FormValue("password")
 
-	// Mencari user berdasarkan username
 	var user models.User
 	if err := config.DB.Where("username = ?", username).First(&user).Error; err != nil {
 		return c.Render(http.StatusOK, "login.html", map[string]interface{}{
@@ -30,24 +29,39 @@ func HandleLogin(c echo.Context) error {
 		})
 	}
 
-	// Verifikasi password dengan bcrypt
 	if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password)); err != nil {
 		return c.Render(http.StatusOK, "login.html", map[string]interface{}{
 			"error": "Invalid username or password",
 		})
 	}
 
-	// Simpan waktu login terakhir
 	user.LastLogin = time.Now()
-	config.DB.Save(&user)
 
-	// Simpan status login di session
-	sess, _ := session.Get("session", c)
+	if err := config.DB.Save(&user).Error; err != nil {
+		return c.JSON(http.StatusInternalServerError, echo.Map{
+			"message": "Failed to update last login time",
+		})
+	}
+
+	sess, err := session.Get("session", c)
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, echo.Map{
+			"message": "Failed to get session",
+		})
+	}
+
 	sess.Values["username"] = user.Username
 	sess.Values["userID"] = user.ID
-	sess.Save(c.Request(), c.Response())
+	if err := sess.Save(c.Request(), c.Response()); err != nil {
+		return c.JSON(http.StatusInternalServerError, echo.Map{
+			"message": "Failed to save session",
+		})
+	}
 
-	// Redirect ke halaman profil pengguna
+	log.Println("User:", user)
+	log.Println("Session:", sess)
+	log.Println("Database:", config.DB)
+
 	return c.Redirect(http.StatusFound, "/profile/"+strconv.Itoa(user.ID))
 }
 
@@ -61,8 +75,6 @@ func UserProfile(c echo.Context) error {
 	}
 
 	var user models.User
-
-	// Mencari user berdasarkan ID
 	if err := config.DB.Preload("Groups").First(&user, userID).Error; err != nil {
 		return c.JSON(http.StatusNotFound, echo.Map{
 			"message": "User not found",
