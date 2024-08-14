@@ -16,8 +16,8 @@ Follow these steps to set up and run the GolangApp API in a Docker container.
 First, clone the repository to your local machine:
 
 ```bash
-git clone https://github.com/passyaa/GolangAppCURD.git
-cd GolangAppCURD
+git clone https://github.com/passyaa/golang-sqlite.git
+cd golang-sqlite
 ```
 
 ### 2. Build and Run the Containers
