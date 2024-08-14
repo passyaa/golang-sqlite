@@ -1,0 +1,254 @@
+{
+    "info": {
+        "name": "GolangApp API",
+        "description": "Postman collection for GolangApp API",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "Get User",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "http://localhost:8080/users/:id",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8080",
+                    "path": [
+                        "users",
+                        ":id"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "Get All Users",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "http://localhost:8080/users",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8080",
+                    "path": [
+                        "users"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "Create User",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\"username\": \"newuser\", \"email\": \"newuser@example.com\", \"password\": \"password\", \"first_name\": \"New\", \"last_name\": \"User\"}"
+                },
+                "url": {
+                    "raw": "http://localhost:8080/users",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8080",
+                    "path": [
+                        "users"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "Update User",
+            "request": {
+                "method": "PUT",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\"first_name\": \"Updated\", \"last_name\": \"User\"}"
+                },
+                "url": {
+                    "raw": "http://localhost:8080/users/:id",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8080",
+                    "path": [
+                        "users",
+                        ":id"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "Enable User",
+            "request": {
+                "method": "PUT",
+                "header": [],
+                "url": {
+                    "raw": "http://localhost:8080/users/:id/enable",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8080",
+                    "path": [
+                        "users",
+                        ":id",
+                        "enable"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "Disable User",
+            "request": {
+                "method": "PUT",
+                "header": [],
+                "url": {
+                    "raw": "http://localhost:8080/users/:id/disable",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8080",
+                    "path": [
+                        "users",
+                        ":id",
+                        "disable"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "Delete User",
+            "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                    "raw": "http://localhost:8080/users/:id",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8080",
+                    "path": [
+                        "users",
+                        ":id"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "Reset Password",
+            "request": {
+                "method": "PUT",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\"new_password\": \"newpassword\"}"
+                },
+                "url": {
+                    "raw": "http://localhost:8080/users/:id/reset_password",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8080",
+                    "path": [
+                        "users",
+                        ":id",
+                        "reset_password"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "Get Group",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "http://localhost:8080/groups/:id",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8080",
+                    "path": [
+                        "groups",
+                        ":id"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "Get All Groups",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "http://localhost:8080/groups",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8080",
+                    "path": [
+                        "groups"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "Assign Group",
+            "request": {
+                "method": "POST",
+                "header": [],
+                "url": {
+                    "raw": "http://localhost:8080/users/:id/groups/:group_id",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8080",
+                    "path": [
+                        "users",
+                        ":id",
+                        "groups",
+                        ":group_id"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "Remove Group",
+            "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                    "raw": "http://localhost:8080/groups/:group_id",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8080",
+                    "path": [
+                        "groups",
+                        ":group_id"
+                    ]
+                }
+            }
+        }
+    ]
+}

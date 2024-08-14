@@ -16,7 +16,7 @@ Follow these steps to set up and run the GolangApp API in a Docker container.
 First, clone the repository to your local machine:
 
 ```bash
-git clone https://github.com/your-username/golangapp.git
+git clone https://github.com/passyaa/GolangAppCURD.git
 cd golangapp
 ```
 
@@ -36,6 +36,8 @@ Once the containers are up and running, you can verify the API by accessing the 
 2. Get all groups: http://localhost:8080/groups
 
 ### 4. List API Endpoints
+You can Download Colletion Postman 
+
 Here are some of the available API endpoints:
 
 1. GET /users/:id - Fetch a single user by ID
