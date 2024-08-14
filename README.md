@@ -17,7 +17,7 @@ First, clone the repository to your local machine:
 
 ```bash
 git clone https://github.com/passyaa/GolangAppCURD.git
-cd golangapp
+cd GolangAppCURD
 ```
 
 ### 2. Build and Run the Containers
