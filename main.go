@@ -40,9 +40,10 @@ func main() {
 	e.GET("/", handlers.HomePage) // Halaman home dapat diakses tanpa autentikasi
 	e.GET("/login", handlers.ShowLoginPage)
 	e.POST("/login", handlers.HandleLogin)
+	e.GET("/logout", handlers.Logout)
 
-	// Route to show the user's profile
-	e.GET("/profile/:id", handlers.UserProfile)
+	// Apply the AuthMiddleware to protect the profile route
+	e.GET("/profile/:id", handlers.UserProfile, middlewares.AuthMiddleware)
 
 	// Group of routes that require authentication
 	auth := e.Group("/api/v1")

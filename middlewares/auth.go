@@ -15,3 +15,13 @@ func BasicAuthMiddleware(username, password string, c echo.Context) (bool, error
 		return false, echo.NewHTTPError(http.StatusUnauthorized, "Invalid credentials")
 	}
 }
+
+func AuthMiddleware(next echo.HandlerFunc) echo.HandlerFunc {
+	return func(c echo.Context) error {
+		session := c.Get("username")
+		if session == nil {
+			return c.Redirect(http.StatusFound, "/login")
+		}
+		return next(c)
+	}
+}

@@ -7,6 +7,7 @@ import (
 	"strconv"
 	"time"
 
+	"github.com/labstack/echo-contrib/session"
 	"github.com/labstack/echo/v4"
 	"golang.org/x/crypto/bcrypt"
 )
@@ -40,6 +41,10 @@ func HandleLogin(c echo.Context) error {
 	user.LastLogin = time.Now()
 	config.DB.Save(&user)
 
+	// Simpan status login di session
+	c.Set("username", user.Username)
+	c.Set("userID", user.ID)
+
 	// Redirect ke halaman profil pengguna
 	return c.Redirect(http.StatusFound, "/profile/"+strconv.Itoa(user.ID))
 }
@@ -64,4 +69,16 @@ func UserProfile(c echo.Context) error {
 
 	// Render the HTML page
 	return c.Render(http.StatusOK, "profile.html", user)
+}
+
+// Logout logs the user out and redirects to the home page
+func Logout(c echo.Context) error {
+	// Hapus sesi atau informasi login
+	sess, _ := session.Get("session", c)
+	sess.Values["username"] = nil
+	sess.Values["userID"] = nil
+	sess.Save(c.Request(), c.Response())
+
+	// Redirect ke halaman utama
+	return c.Redirect(http.StatusFound, "/")
 }
