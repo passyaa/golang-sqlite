@@ -45,7 +45,7 @@ func main() {
 	e.GET("/profile/:id", handlers.UserProfile)
 
 	// Group of routes that require authentication
-	auth := e.Group("/")
+	auth := e.Group("/api/v1")
 
 	// Apply the Basic Auth Middleware only to specific routes
 	auth.Use(middleware.BasicAuth(middlewares.BasicAuthMiddleware))
