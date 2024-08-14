@@ -33,7 +33,7 @@ Once the containers are up and running, you can verify the API by accessing the 
 2. Get all groups: http://localhost:8080/api/v1/groups
 
 ### 4. List API Endpoints
-You can Download Colletion Postman [Postman Collection](https://github.com/passyaa/GolangAppCURD/blob/main/golangApp_postman_collection.json),
+You can Download Colletion Postman [Postman Collection](https://github.com/passyaa/golang-sqlite/blob/main/GolangApp-API.postman_collection.json),
 
 Here are some of the available API endpoints:
 
